@@ -1,0 +1,20 @@
+PREFIX wikibase: <http://wikiba.se/ontology#>
+PREFIX entity: <http://www.wikidata.org/entity/>
+PREFIX wdt:      <http://www.wikidata.org/prop/direct/>
+PREFIX rdfs:   <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX q:      <http://www.wikidata.org/prop/qualifier/>
+PREFIX p:      <http://www.wikidata.org/prop/>
+PREFIX ps:     <http://www.wikidata.org/prop/statement/>
+
+SELECT ?provider ?providerLabel ?mcc ?mnc WHERE {
+  ?provider wdt:P31 entity:Q783794 .           # find instances of company
+  ?provider p:P2259 ?x .                       # with a P2259 (mobile network code) statement
+  ?x ps:P2259 ?mnc .                           # ... that has the value ?mnc
+  FILTER EXISTS { ?x q:P2258 ?y }              # ... and a mcc qualifier
+
+  ?x q:P2258 ?mcc .
+  SERVICE wikibase:label {
+    bd:serviceParam wikibase:language "en" .
+  }
+}
+ORDER BY(?mcc)
