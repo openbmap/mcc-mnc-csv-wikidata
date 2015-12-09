@@ -7,9 +7,9 @@ PREFIX p:      <http://www.wikidata.org/prop/>
 PREFIX ps:     <http://www.wikidata.org/prop/statement/>
 
 SELECT ?country ?countryLabel ?mcc ?dial ?iso WHERE {
-  ?country wdt:P31 entity:Q6256 .           # find instances of company
-  ?country p:P2258 ?x .                       # with a P2259 (mobile network code) statement
-  ?x ps:P2258 ?mcc .                           # ... that has the value ?mnc
+  ?country wdt:P31 entity:Q3624078 .           # find instances of soverein state        
+  ?country wdt:P31 entity:Q6256 .  		       # and instances of country       
+  OPTIONAL {?country wdt:P2258 ?mcc} .         # with a P2258 (mobile country code) statement
   OPTIONAL {?country wdt:P474 ?dial} .
   OPTIONAL {?country wdt:P297 ?iso} .
   
